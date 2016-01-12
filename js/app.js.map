@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA","file":"app.js","sourcesContent":["var myFunc = function() {\n  console.log(\"this is a function\");\n};\n\nmyFunc();\n"],"sourceRoot":"/source/"}

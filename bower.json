@@ -1,0 +1,23 @@
+{
+  "name": "react-node-app",
+  "description": "messing with react, node, npm, gulp, bower",
+  "main": "index.js",
+  "authors": [
+    "Taylor Martin"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.6",
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.6",
+    "font-awesome": "fontawesome#~4.5.0"
+  }
+}
