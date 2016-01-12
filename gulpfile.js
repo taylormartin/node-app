@@ -6,10 +6,8 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   sass = require('gulp-sass'),
   maps = require('gulp-sourcemaps'),
-  del = require('del'),
-  ruby_sass = require('gulp-ruby-sass'),
-  notify = require("gulp-notify"),
-  bower = require('gulp-bower');
+  del = require('del');
+
 
 gulp.task("concatScripts", function(){
   return gulp.src([
@@ -36,26 +34,6 @@ gulp.task('compileSass', function() {
       .pipe(gulp.dest('css'));
 });
 
-gulp.task('addIcons', function() { 
-    return gulp.src('./bower_components/fontawesome/fonts/**.*') 
-        .pipe(gulp.dest('./fonts')); 
-});
-
-gulp.task('addBootstrap', function() { 
-    return gulp.src('./resources/sass/style.scss')
-         .pipe(ruby_sass({
-             style: 'compressed',
-             loadPath: [
-                 './bower_components/bootstrap-sass-official/assets/stylesheets',
-                 './bower_components/fontawesome/scss',
-             ]
-         }) 
-            .on("error", notify.onError(function (error) {
-                 return "Error: " + error.message;
-             }))) 
-         .pipe(gulp.dest('./css'));
-});
-
 gulp.task('watchSass', function() {
   gulp.watch('scss/**/*.scss', ['compileSass']);
 });
@@ -64,7 +42,7 @@ gulp.task('clean', function() {
   del(['dist', 'css/application.css*', 'js/app*.js*']);
 });
 
-gulp.task("build", ['minifyScripts', 'compileSass', 'addBootstrap', 'addIcons'], function() {
+gulp.task("build", ['minifyScripts', 'compileSass'], function() {
   return gulp.src(["css/application.css", "js/app.min.js", 'index.html',
                    "img/**", "fonts/**"], { base: './'})
             .pipe(gulp.dest('dist'));
