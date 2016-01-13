@@ -25,12 +25,21 @@ gulp.task("minifyScripts", ["concatScripts"], function() {
     .pipe(gulp.dest('src/js'));
 });
 
-gulp.task('compileSass', function() {
-  return gulp.src("src/scss/application.scss")
-      .pipe(maps.init())
-      .pipe(sass())
-      .pipe(maps.write('./'))
-      .pipe(gulp.dest('src/css'));
+gulp.task('compileSass', ['fonts'], function () {
+    return gulp.src('src/scss/application.scss')
+        .pipe(sass({
+          outputStyle: 'nested',
+          precison: 3,
+          errLogToConsole: true,
+          includePaths: ['./bower_components/bootstrap-sass/assets/stylesheets']
+        }))
+        .pipe(gulp.dest('src/css/'));
+});
+
+gulp.task('fonts', function () {
+    return gulp
+        .src(['src/fonts/*.*', './bower_components/bootstrap-sass-official/assets/fonts/**/*'])
+        .pipe(gulp.dest('dist/fonts/'));
 });
 
 gulp.task('watchSass', function() {
@@ -48,3 +57,4 @@ gulp.task("build", ['minifyScripts', 'compileSass'], function() {
 });
 
 gulp.task("default", ["clean", "build"]);
+
