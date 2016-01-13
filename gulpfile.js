@@ -25,7 +25,15 @@ gulp.task("minifyScripts", ["concatScripts"], function() {
     .pipe(gulp.dest('src/js'));
 });
 
-gulp.task('compileSass', ['fonts'], function () {
+gulp.task("addJsDep", function() {
+  return gulp.src([
+      './bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+      './bower_components/jquery/dist/jquery.min.js' 
+    ])
+    .pipe(gulp.dest('src/js'))
+});
+
+gulp.task('compileSass', ['addFonts'], function () {
     return gulp.src('src/scss/application.scss')
         .pipe(sass({
           outputStyle: 'nested',
@@ -36,10 +44,10 @@ gulp.task('compileSass', ['fonts'], function () {
         .pipe(gulp.dest('src/css/'));
 });
 
-gulp.task('fonts', function () {
+gulp.task('addFonts', function () {
     return gulp
-        .src(['src/fonts/*.*', './bower_components/bootstrap-sass-official/assets/fonts/**/*'])
-        .pipe(gulp.dest('dist/fonts/'));
+        .src('./bower_components/bootstrap-sass/assets/fonts/**/*')
+        .pipe(gulp.dest('src/fonts/'));
 });
 
 gulp.task('watchSass', function() {
@@ -50,9 +58,15 @@ gulp.task('clean', function() {
   del(['dist', 'src/css/application.css*', 'src/js/app*.js*']);
 });
 
-gulp.task("build", ['minifyScripts', 'compileSass'], function() {
-  return gulp.src(["src/css/application.css", "src/js/app.min.js", 'src/index.html',
-                   "src/img/**", "src/fonts/**"], { base: './'})
+gulp.task("build", ['minifyScripts', 'addJsDep', 'compileSass'], function() {
+  return gulp.src(["src/css/application.css",
+                   "src/js/app.min.js",
+                   "src/js/jquery.min.js",
+                   "src/js/bootstrap.min.js",
+                   'src/index.html',
+                   "src/img/**",
+                   "src/fonts/**"],
+                   { base: './src'})
             .pipe(gulp.dest('dist'));
 });
 
